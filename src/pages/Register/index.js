@@ -19,6 +19,14 @@ function Register() {
       .createUserWithEmailAndPassword(email, password)
       .then(userCredential => {
         const user = userCredential.user;
+
+        firebase
+          .database()
+          .ref("users/" + user.uid)
+          .set({
+            fullName: fullName,
+            email: email,
+          });
       })
       .catch(error => {
         const errorCode = error.code;
