@@ -1,12 +1,32 @@
 import { useState } from "react";
 
+import { firebase } from "../../config";
+import { Spinner, Alert } from "../../components";
+
 function Register() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = e => {
     e.preventDefault();
+
+    setIsLoading(true);
+
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(userCredential => {
+        const user = userCredential.user;
+      })
+      .catch(error => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        alert(errorMessage);
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -52,8 +72,10 @@ function Register() {
           type="submit"
           className="btn btn-primary"
           onClick={e => onSubmit(e)}
+          style={{ minWidth: "150px" }}
         >
-          Daftar
+          {isLoading && <Spinner />}
+          {!isLoading && "Daftar"}
         </button>
       </div>
     </form>

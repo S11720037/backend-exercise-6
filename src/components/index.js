@@ -1,3 +1,4 @@
 import { Navbar } from "./molecules";
+import { Spinner, Alert } from "./atoms";
 
-export { Navbar };
+export { Navbar, Spinner, Alert };
