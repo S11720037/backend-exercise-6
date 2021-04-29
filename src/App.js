@@ -1,4 +1,5 @@
-import { Register, Navbar } from "./components";
+import { Navbar } from "./components";
+import { Register } from "./pages";
 
 function App() {
   return (

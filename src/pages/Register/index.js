@@ -60,4 +60,4 @@ function Register() {
   );
 }
 
-export { Register };
+export default Register;
