@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { firebase } from "../../config";
-import { Spinner, Alert } from "../../components";
+import { Spinner } from "../../components";
 
 function Register() {
   const [fullName, setFullName] = useState("");

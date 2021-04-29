@@ -1,5 +1,5 @@
 import { Navbar } from "./components";
-import { Register } from "./pages";
+import Routes from "./routes";
 
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
 
       <div className="container-fluid m-0 p-1">
         <div className="container-md mt-3 rounded shadow-sm border p-3">
-          <Register />
+          <Routes />
         </div>
       </div>
     </div>
