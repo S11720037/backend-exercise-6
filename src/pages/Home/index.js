@@ -94,45 +94,54 @@ function Home() {
       <h2 className="text-center">Home</h2>
       <hr />
       <form>
-        <div className="mb-3">
-          <label htmlFor="product-name" className="form-label">
-            Product Name
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="product-name"
-            placeholder="Type the product name"
-            value={productName}
-            onChange={e => setProductName(e.target.value)}
-          />
+        <div className="row">
+          <div className="col-sm-4 p-1">
+            <div className="mb-3">
+              <label htmlFor="product-name" className="form-label">
+                Product Name
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="product-name"
+                placeholder="Type the product name"
+                value={productName}
+                onChange={e => setProductName(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="col-sm-4 p-1">
+            <div className="mb-3">
+              <label htmlFor="category" className="form-label">
+                Category
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="category"
+                placeholder="Type the category"
+                value={category}
+                onChange={e => setCategory(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="col-sm-4 p-1">
+            <div className="mb-3">
+              <label htmlFor="price" className="form-label">
+                Price
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="price"
+                placeholder="Type the product name"
+                value={price}
+                onChange={e => setPrice(e.target.value)}
+              />
+            </div>
+          </div>
         </div>
-        <div className="mb-3">
-          <label htmlFor="category" className="form-label">
-            Category
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="category"
-            placeholder="Type the category"
-            value={category}
-            onChange={e => setCategory(e.target.value)}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="price" className="form-label">
-            Price
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="price"
-            placeholder="Type the product name"
-            value={price}
-            onChange={e => setPrice(e.target.value)}
-          />
-        </div>
+
         <div className="text-center">
           <button
             type="submit"
