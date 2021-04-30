@@ -9,6 +9,8 @@ function Home() {
   const [price, setPrice] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState([]);
+  const [mainButton, setMainButton] = useState("Save");
+  const [selectedProduct, setSelectedProduct] = useState({});
 
   useEffect(() => {
     firebase
@@ -19,7 +21,7 @@ function Home() {
           const rawData = res.val();
           const productArray = [];
           Object.keys(rawData).map(i => {
-            productArray.push({ id: i, ...rawData[i] });
+            return productArray.push({ id: i, ...rawData[i] });
           });
           setProducts(productArray);
         }
@@ -43,20 +45,29 @@ function Home() {
       price: price,
     };
 
-    firebase
-      .database()
-      .ref("products")
-      .push(data)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    if (mainButton === "Save") {
+      firebase.database().ref("products").push(data);
+    } else {
+      firebase
+        .database()
+        .ref("products/" + selectedProduct.id)
+        .set(data);
+
+      setMainButton("Save");
+    }
 
     resetData();
 
     setIsLoading(false);
+  };
+
+  const onUpdate = item => {
+    setProductName(item.product);
+    setCategory(item.category);
+    setPrice(item.price);
+    setSelectedProduct(item);
+
+    setMainButton("Update");
   };
 
   return (
@@ -111,7 +122,7 @@ function Home() {
             onClick={e => onSubmit(e)}
           >
             {isLoading && <Spinner />}
-            {!isLoading && "Save"}
+            {!isLoading && mainButton}
           </button>
         </div>
       </form>
@@ -133,7 +144,11 @@ function Home() {
                 <td>{i.category}</td>
                 <td>{i.price}</td>
                 <td>
-                  <button type="button" className="btn btn-success btn-sm m-1">
+                  <button
+                    type="button"
+                    className="btn btn-success btn-sm m-1"
+                    onClick={() => onUpdate(i)}
+                  >
                     Edit
                   </button>
                   <button type="button" className="btn btn-danger btn-sm m-1">
