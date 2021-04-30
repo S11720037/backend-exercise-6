@@ -5,7 +5,7 @@ import { Register, Login, Home } from "../pages";
 function Routes() {
   return (
     <Switch>
-      <Route exact path="/">
+      <Route exact path="/backend-exercise-6">
         <Home />
       </Route>
       <Route path="/login">
