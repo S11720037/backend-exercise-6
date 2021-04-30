@@ -11,6 +11,8 @@ function Home() {
   const [products, setProducts] = useState([]);
   const [mainButton, setMainButton] = useState("Save");
   const [selectedProduct, setSelectedProduct] = useState({});
+  const [canceUpdate, setCancelUpdate] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     firebase
@@ -59,6 +61,7 @@ function Home() {
     resetData();
 
     setIsLoading(false);
+    setIsEditing(false);
   };
 
   const onUpdate = item => {
@@ -68,6 +71,22 @@ function Home() {
     setSelectedProduct(item);
 
     setMainButton("Update");
+    setCancelUpdate(true);
+    setIsEditing(true);
+  };
+
+  const onDelete = item => {
+    firebase
+      .database()
+      .ref("products/" + item.id)
+      .remove();
+  };
+
+  const onCancelUpdate = () => {
+    resetData();
+    setCancelUpdate(false);
+    setMainButton("Save");
+    setIsEditing(false);
   };
 
   return (
@@ -117,13 +136,22 @@ function Home() {
         <div className="text-center">
           <button
             type="submit"
-            className="btn btn-primary"
+            className="btn btn-primary m-1"
             style={{ minWidth: "150px" }}
             onClick={e => onSubmit(e)}
           >
             {isLoading && <Spinner />}
             {!isLoading && mainButton}
           </button>
+          {canceUpdate && (
+            <button
+              type="button"
+              className="btn btn-secondary m-1"
+              onClick={onCancelUpdate}
+            >
+              Batal
+            </button>
+          )}
         </div>
       </form>
       <hr />
@@ -151,9 +179,24 @@ function Home() {
                   >
                     Edit
                   </button>
-                  <button type="button" className="btn btn-danger btn-sm m-1">
-                    Delete
-                  </button>
+                  {isEditing && (
+                    <button
+                      type="button"
+                      className="btn disabled btn-danger btn-sm m-1"
+                      onClick={() => onDelete(i)}
+                    >
+                      Delete
+                    </button>
+                  )}
+                  {!isEditing && (
+                    <button
+                      type="button"
+                      className="btn btn-danger btn-sm m-1"
+                      onClick={() => onDelete(i)}
+                    >
+                      Delete
+                    </button>
+                  )}
                 </td>
               </tr>
             );
