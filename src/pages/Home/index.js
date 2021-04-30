@@ -18,6 +18,7 @@ function Home() {
     firebase
       .database()
       .ref("products")
+      .orderByChild("price")
       .on("value", res => {
         if (res.val()) {
           const rawData = res.val();
@@ -25,7 +26,7 @@ function Home() {
           Object.keys(rawData).map(i => {
             return productArray.push({ id: i, ...rawData[i] });
           });
-          setProducts(productArray);
+          setProducts(productArray.reverse());
         }
       });
   }, []);
